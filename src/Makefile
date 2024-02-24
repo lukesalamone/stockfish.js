@@ -232,7 +232,7 @@ ifeq ($(COMP),emscripten)
 		LDFLAGS += -s WASM=0 -s LEGACY_VM_SUPPORT=1
 	else
 		CXXFLAGS += --llvm-lto 3
-		LDFLAGS += -s WASM=1 -s "BINARYEN_TRAP_MODE='allow'" -s BINARYEN_ASYNC_COMPILATION=1 --llvm-lto 3
+		LDFLAGS += -s WASM=1 -s BINARYEN_ASYNC_COMPILATION=1 --llvm-lto 3
 	endif
 endif
 
@@ -387,9 +387,9 @@ endif
 ### 3.6 popcnt
 ifeq ($(popcnt),yes)
 	ifeq ($(comp),icc)
-		CXXFLAGS += -msse3 -DUSE_POPCNT
+		CXXFLAGS += -msse3 -DUSE_POPCNT -msimd128
 	else
-		CXXFLAGS += -msse3 -mpopcnt -DUSE_POPCNT
+		CXXFLAGS += -msse3 -mpopcnt -DUSE_POPCNT -msimd128
 	endif
 endif
 
