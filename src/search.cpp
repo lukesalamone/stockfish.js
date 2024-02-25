@@ -1999,27 +1999,10 @@ string UCI::pv(const Position& pos, Depth depth, Value alpha, Value beta) {
       if (ss.rdbuf()->in_avail()) // Not at first line
           ss << "\n";
 
-      ss << "info"
-         << " depth "    << d / ONE_PLY
-         << " seldepth " << rootMoves[i].selDepth
-         << " multipv "  << i + 1
-         << " score "    << UCI::value(v);
-
-      if (!tb && i == pvIdx)
-          ss << (v >= beta ? " lowerbound" : v <= alpha ? " upperbound" : "");
-
-      ss << " nodes "    << nodesSearched
-         << " nps "      << nodesSearched * 1000 / elapsed;
-
-      if (elapsed > 1000) // Earlier makes little sense
-          ss << " hashfull " << TT.hashfull();
-
-      ss << " tbhits "   << tbHits
-         << " time "     << elapsed
-         << " pv";
-
-      for (Move m : rootMoves[i].pv)
-          ss << " " << UCI::move(m, pos.is_chess960());
+      ss << "{\"type\": \"info\", "
+         << "\"depth\": "    << d / ONE_PLY  << ", "
+s         << "\"score\": "    << "\"" << UCI::value(v)   << "\", "
+         << "\"fen\": "     << "\"" << pos.fen() << "\"}";
   }
 
   return ss.str();
