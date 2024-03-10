@@ -396,7 +396,8 @@ void MainThread::search() {
       Value score = rootPos.is_variant_end() ? rootPos.variant_result()
                    : rootPos.checkers() ? rootPos.checkmate_value()
                    : rootPos.stalemate_value();
-      sync_cout << "info depth 0 score " << UCI::value(score) << sync_endl;
+      sync_cout << "{\"type\":\"info\", \"depth\":0, \"score\": \"" << UCI::value(score) 
+        << "\", \"fen\": \"" << rootPos.fen() << "\"}" << sync_endl;
   }
   else
   {
@@ -2001,7 +2002,7 @@ string UCI::pv(const Position& pos, Depth depth, Value alpha, Value beta) {
 
       ss << "{\"type\": \"info\", "
          << "\"depth\": "    << d / ONE_PLY  << ", "
-s         << "\"score\": "    << "\"" << UCI::value(v)   << "\", "
+         << "\"score\": "    << "\"" << UCI::value(v)   << "\", "
          << "\"fen\": "     << "\"" << pos.fen() << "\"}";
   }
 
